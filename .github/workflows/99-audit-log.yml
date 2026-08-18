@@ -18,14 +18,23 @@ permissions:
   actions: read
   pull-requests: read
 
+concurrency:
+  group: governance-audit-log
+  cancel-in-progress: false
+
 jobs:
   audit:
     name: Record governance event
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.fork != true
     steps:
       - name: Check out audit store
         uses: actions/checkout@v4
         with:
+          # pull_request runs check out a detached merge ref, which cannot be
+          # pushed. The audit store lives on the default branch, so always
+          # check that branch out explicitly.
+          ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
 
       - name: Append event
@@ -54,3 +63,4 @@ jobs:
           add: .github/agent-state/audit/events.jsonl
           message: "chore: record governance audit event"
           default_author: github_actions
+          pull: "--rebase --autostash"
