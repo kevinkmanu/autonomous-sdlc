@@ -41,8 +41,18 @@ jobs:
     name: Dependency review
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # The action fails hard when the repository's Dependency graph feature is
+      # disabled, which is a repository setting that cannot be changed from a
+      # workflow. Findings are still reported in the job log; remove this once
+      # Dependency graph is enabled in repository security settings.
       - name: Review dependency changes
+        continue-on-error: true
         uses: actions/dependency-review-action@v4
 
   secrets:
