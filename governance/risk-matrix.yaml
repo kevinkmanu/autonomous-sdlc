@@ -1,0 +1,82 @@
+version: 1
+
+risk_classes:
+  low:
+    description: "Low-impact change with limited blast radius and no sensitive data."
+    required_approvals:
+      - business_owner
+    required_gates:
+      - plan_schema
+      - plan_acceptance
+      - ci
+      - tests
+      - policy
+    reviewer_teams:
+      - product-owners
+
+  medium:
+    description: "Change with material operational, customer, or integration impact."
+    required_approvals:
+      - business_owner
+      - engineering
+    required_gates:
+      - plan_schema
+      - plan_acceptance
+      - ci
+      - tests
+      - security
+      - policy
+    reviewer_teams:
+      - product-owners
+      - engineering-codeowners
+
+  high:
+    description: "Change affecting critical services, authentication, payments, or architecture."
+    required_approvals:
+      - business_owner
+      - engineering
+      - security
+      - architecture
+    required_gates:
+      - plan_schema
+      - plan_acceptance
+      - ci
+      - tests
+      - security
+      - architecture
+      - policy
+      - provenance
+    reviewer_teams:
+      - product-owners
+      - engineering-codeowners
+      - security-reviewers
+      - architecture-board
+
+  critical:
+    description: "Regulated, safety-sensitive, or enterprise-wide change."
+    required_approvals:
+      - business_owner
+      - engineering
+      - security
+      - architecture
+      - compliance
+      - privacy
+    required_gates:
+      - plan_schema
+      - plan_acceptance
+      - ci
+      - tests
+      - security
+      - architecture
+      - compliance
+      - privacy
+      - policy
+      - provenance
+      - deployment_approval
+    reviewer_teams:
+      - product-owners
+      - engineering-codeowners
+      - security-reviewers
+      - architecture-board
+      - compliance-reviewers
+      - privacy-reviewers

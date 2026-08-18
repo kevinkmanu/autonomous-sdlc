@@ -1,0 +1,29 @@
+{
+  "name": "autonomous-sdlc-governance",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Governance scaffolding for an enterprise autonomous software development lifecycle.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "verify": "npm run validate:json && npm run validate:agents && npm test && npm run policy:verify",
+    "policy:verify": "node scripts/verify-policies.mjs",
+    "validate:json": "node scripts/validate-json.mjs",
+    "validate:agents": "node scripts/validate-agent-definitions.mjs",
+    "validate:plan-acceptance": "node scripts/validate-plan-acceptance.mjs",
+    "validate:approval-freshness": "node scripts/validate-approval-freshness.mjs",
+    "resolve:approvals": "node scripts/resolve-required-approvals.mjs",
+    "create:authorization": "node scripts/create-authorization-record.mjs",
+    "check:authorization": "node scripts/check-plan-authorization.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "js-yaml": "^5.2.3"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.10"
+  }
+}

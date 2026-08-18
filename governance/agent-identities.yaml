@@ -1,0 +1,90 @@
+version: 1
+
+default_identity: github-actions[bot]
+
+identities:
+  orchestrator:
+    principals:
+      - github-actions[bot]
+    allowed_write_globs:
+      - ".github/agent-state/**"
+    denied_write_globs:
+      - ".github/workflows/**"
+      - "governance/**"
+      - "src/**"
+      - "tests/**"
+    may_open_pull_requests: true
+    may_merge_pull_requests: false
+    may_approve_pull_requests: false
+
+  planner:
+    principals:
+      - github-actions[bot]
+    allowed_write_globs:
+      - "plans/**"
+    denied_write_globs:
+      - "src/**"
+      - "tests/**"
+      - "governance/**"
+      - ".github/workflows/**"
+    may_open_pull_requests: true
+    may_merge_pull_requests: false
+    may_approve_pull_requests: false
+
+  developer:
+    principals:
+      - github-actions[bot]
+    allowed_write_globs:
+      - "src/**"
+      - "app/**"
+      - "lib/**"
+    denied_write_globs:
+      - "tests/**"
+      - "governance/**"
+      - ".github/workflows/**"
+      - ".github/CODEOWNERS"
+      - "plans/**"
+    may_open_pull_requests: false
+    may_merge_pull_requests: false
+    may_approve_pull_requests: false
+
+  tester:
+    principals:
+      - github-actions[bot]
+    allowed_write_globs:
+      - "tests/**"
+      - "test/**"
+      - "spec/**"
+    denied_write_globs:
+      - "src/**"
+      - "app/**"
+      - "governance/**"
+      - ".github/workflows/**"
+      - "plans/**"
+    may_open_pull_requests: false
+    may_merge_pull_requests: false
+    may_approve_pull_requests: false
+
+  security_reviewer:
+    principals:
+      - github-actions[bot]
+    allowed_write_globs:
+      - "security/**"
+      - "docs/security/**"
+    denied_write_globs:
+      - "src/**"
+      - "tests/**"
+      - "governance/**"
+      - ".github/workflows/**"
+    may_open_pull_requests: true
+    may_merge_pull_requests: false
+    may_approve_pull_requests: false
+
+  human:
+    principals: []
+    allowed_write_globs:
+      - "**"
+    denied_write_globs: []
+    may_open_pull_requests: true
+    may_merge_pull_requests: true
+    may_approve_pull_requests: true

@@ -1,0 +1,68 @@
+{
+  "plan": {
+    "id": "PLAN-0042",
+    "risk_class": "medium",
+    "data_classification": "internal"
+  },
+  "currentCommit": "abc123",
+  "implementationBranch": "feat/PLAN-0042-orders-export",
+  "approvals": [
+    {
+      "user": "alice",
+      "roles": [
+        "business_owner"
+      ],
+      "state": "APPROVED",
+      "commitSha": "abc123"
+    },
+    {
+      "user": "bob",
+      "roles": [
+        "engineering"
+      ],
+      "state": "APPROVED",
+      "commitSha": "abc123"
+    }
+  ],
+  "invalidCases": [
+    {
+      "name": "stale approval",
+      "overrides": {
+        "approvals": [
+          {
+            "user": "alice",
+            "roles": [
+              "business_owner"
+            ],
+            "state": "APPROVED",
+            "commitSha": "old456"
+          }
+        ]
+      },
+      "expectedCode": "STALE_APPROVAL"
+    },
+    {
+      "name": "missing engineering approval",
+      "overrides": {
+        "approvals": [
+          {
+            "user": "alice",
+            "roles": [
+              "business_owner"
+            ],
+            "state": "APPROVED",
+            "commitSha": "abc123"
+          }
+        ]
+      },
+      "expectedCode": "MISSING_REQUIRED_APPROVAL"
+    },
+    {
+      "name": "invalid implementation branch",
+      "overrides": {
+        "implementationBranch": "main"
+      },
+      "expectedCode": "UNAUTHORIZED_IMPLEMENTATION"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Replace these logical team handles with the organization's GitHub team slugs
+# before enabling required CODEOWNERS reviews in repository rulesets.
+
+* @governance-board
+
+/.github/workflows/ @platform-engineering @security-engineering
+/.github/CODEOWNERS @governance-board
+/.github/copilot-instructions.md @governance-board
+/governance/ @governance-board
+/plans/ @product-owners @engineering-codeowners
+/infra/ @platform-engineering @security-engineering
+/migrations/ @data-platform @security-engineering
+
+**/auth/** @security-engineering
+**/crypto/** @security-engineering
+**/*.lock @platform-engineering @security-engineering

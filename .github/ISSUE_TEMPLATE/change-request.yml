@@ -1,0 +1,60 @@
+name: Change request
+description: Propose a bounded, plan-first software or governance change.
+title: "[Change]: "
+labels:
+  - needs-plan
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Significant changes require an approved plan before implementation.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem requires a change?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: What observable result should users or operators receive?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Initial scope
+      description: List expected paths, systems, or capabilities in scope.
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Initial risk class
+      options:
+        - low
+        - medium
+        - high
+        - critical
+    validations:
+      required: true
+  - type: dropdown
+    id: data
+    attributes:
+      label: Data classification
+      options:
+        - public
+        - internal
+        - confidential
+        - regulated
+    validations:
+      required: true
+  - type: checkboxes
+    id: security
+    attributes:
+      label: Intake confirmation
+      options:
+        - label: I have not included secrets, credentials, private keys, or production data.
+          required: true

@@ -1,0 +1,48 @@
+version: 1
+
+paths:
+  - pattern: ".github/workflows/**"
+    reason: "Workflow changes can alter governance and deployment controls."
+    required_owners:
+      - platform-engineering
+      - security-engineering
+  - pattern: ".github/CODEOWNERS"
+    reason: "Ownership rules must remain under governance control."
+    required_owners:
+      - governance-board
+  - pattern: ".github/copilot-instructions.md"
+    reason: "Repository-wide agent constraints must remain under governance control."
+    required_owners:
+      - governance-board
+  - pattern: "governance/**"
+    reason: "Governance policies define the enforcement boundary."
+    required_owners:
+      - governance-board
+  - pattern: "plans/**"
+    reason: "Accepted plans are authorization artifacts."
+    required_owners:
+      - product-owners
+      - engineering-codeowners
+  - pattern: "**/*.lock"
+    reason: "Lockfiles affect the software supply chain."
+    required_owners:
+      - platform-engineering
+      - security-engineering
+  - pattern: "infra/**"
+    reason: "Infrastructure changes can affect production environments."
+    required_owners:
+      - platform-engineering
+      - security-engineering
+  - pattern: "migrations/**"
+    reason: "Data migrations require compatibility and rollback review."
+    required_owners:
+      - data-platform
+      - security-engineering
+  - pattern: "**/auth/**"
+    reason: "Authentication and authorization code requires security review."
+    required_owners:
+      - security-engineering
+  - pattern: "**/crypto/**"
+    reason: "Cryptographic code requires specialist review."
+    required_owners:
+      - security-engineering
