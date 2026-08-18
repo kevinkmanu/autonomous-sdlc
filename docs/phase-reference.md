@@ -49,7 +49,7 @@ Status: in progress. Rego policies and policy tests are implemented. Local verif
 
 Define the Orchestrator, Planning, Development, Testing, and Security Review agents, including responsibilities, permitted paths, handoffs, refusal conditions, and escalation rules.
 
-Status: in progress. Agent definitions and write-path contracts are implemented; GitHub Actions handoff wiring remains part of Phase 6.
+Status: complete. Agent charters, instructions, and reusable prompts are implemented in `.github/agents/`, `.github/instructions/`, and `.github/prompts/`.
 
 ## Phase 6 — GitHub Actions Workflows
 
@@ -62,7 +62,7 @@ Wire governance and engineering checks into GitHub:
 - Policy enforcement
 - Provenance, deployment stub, and audit events
 
-Status: in progress. CI and governance validation workflows are implemented; plan-event gates, branch provisioning, security scanning, provenance, and audit integrations remain.
+Status: next.
 
 ## Phase 7 — CODEOWNERS and Repository Templates
 
