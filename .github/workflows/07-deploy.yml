@@ -1,0 +1,32 @@
+name: Deployment Stub
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Deployment environment
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - production
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deployment placeholder
+    runs-on: ubuntu-latest
+    environment: "${{ inputs.environment }}"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate with cloud provider
+        run: 'echo "Configure cloud OIDC login here for ${{ inputs.environment }}."'
+
+      - name: Deploy application
+        run: 'echo "Deployment stub: add the approved platform deployment command here."'

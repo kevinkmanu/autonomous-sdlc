@@ -1,0 +1,39 @@
+name: Policy Enforcement
+
+on:
+  pull_request:
+    paths:
+      - "governance/**"
+      - "plans/**"
+      - "src/**"
+      - "app/**"
+      - "lib/**"
+      - "tests/**"
+      - ".github/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conftest:
+    name: Verify Rego policies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Conftest
+        env:
+          CONFTEST_VERSION: 0.69.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location \
+            "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz" \
+            | tar -xz -C /tmp
+          /tmp/conftest --version
+
+      - name: Verify policies
+        run: /tmp/conftest verify --policy governance/policies

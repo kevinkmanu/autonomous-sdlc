@@ -1,0 +1,48 @@
+name: Provision Implementation Branch
+
+on:
+  pull_request:
+    types: [closed]
+    paths:
+      - "plans/**"
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  provision:
+    name: Create branch after accepted plan merge
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out accepted plan
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          fetch-depth: 0
+
+      - name: Create implementation branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PLAN_PR_BODY: ${{ github.event.pull_request.body }}
+          PLAN_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          plan_id="$(grep -Eo 'PLAN-[0-9]+' <<< "${PLAN_PR_BODY:-}" | head -n 1 || true)"
+          if [[ -z "${plan_id}" ]]; then
+            echo "Merged plan PR does not contain a PLAN-#### identifier."
+            exit 1
+          fi
+          branch="feat/${plan_id}"
+          if git ls-remote --exit-code --heads origin "${branch}" >/dev/null 2>&1; then
+            echo "Implementation branch ${branch} already exists; leaving it unchanged."
+            exit 0
+          fi
+          git push origin "${PLAN_SHA}:refs/heads/${branch}"
+          gh pr create \
+            --base "${{ github.event.repository.default_branch }}" \
+            --head "${branch}" \
+            --title "feat: implement ${plan_id}" \
+            --body "Implementation branch provisioned from accepted plan ${plan_id}. Authorization source commit: ${PLAN_SHA}."

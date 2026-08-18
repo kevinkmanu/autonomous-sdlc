@@ -37,13 +37,13 @@ Implement deterministic checks that ensure an authorized user accepts a plan thr
 - Immutable authorization record
 - Exact accepted-plan linkage for implementation branches
 
-Status: in progress. The deterministic authorization module and CLI checks are implemented; GitHub PR event integration and branch provisioning remain part of Phase 6.
+Status: complete. The deterministic authorization module, CLI checks, plan gate, and post-merge branch provisioning are implemented.
 
 ## Phase 4 — Policy Enforcement
 
 Add declarative Rego policies and tests for scope, plan linkage, protected paths, dependencies, signed commits, and pull request hygiene.
 
-Status: in progress. Rego policies and policy tests are implemented. Local verification requires the Conftest CLI; GitHub Actions will install or provide the pinned tool in Phase 6.
+Status: complete. Rego policies, policy tests, local verification, and the pinned Conftest GitHub Actions gate are implemented.
 
 ## Phase 5 — Copilot Agent Definitions
 
@@ -62,7 +62,7 @@ Wire governance and engineering checks into GitHub:
 - Policy enforcement
 - Provenance, deployment stub, and audit events
 
-Status: next.
+Status: complete. Plan gates, branch provisioning, CI, test quality, security scanning, policy enforcement, provenance, deployment shape, and audit logging are implemented in `.github/workflows/`.
 
 ## Phase 7 — CODEOWNERS and Repository Templates
 

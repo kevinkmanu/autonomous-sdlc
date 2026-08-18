@@ -1,0 +1,49 @@
+name: Test Quality
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  tests:
+    name: Tests and coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test -- --reporter=verbose
+
+      - name: Run coverage when configured
+        shell: bash
+        run: |
+          set -euo pipefail
+          if npm run | grep -qE '^  coverage:'; then
+            npm run coverage
+          else
+            echo "No coverage script is configured; unit tests completed."
+          fi
+
+      - name: Run mutation testing when configured
+        shell: bash
+        run: |
+          set -euo pipefail
+          if npm run | grep -qE '^  mutation:'; then
+            npm run mutation
+          else
+            echo "Mutation testing is not configured for this repository yet."
+          fi
