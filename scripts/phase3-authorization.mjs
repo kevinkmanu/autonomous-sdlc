@@ -122,6 +122,12 @@ export function checkPlanAuthorization({ plan, authorization, implementationBran
   return errors.length === 0 ? { ok: true, planId: plan.id } : { ok: false, code: 'UNAUTHORIZED_IMPLEMENTATION', errors };
 }
 
+/**
+ * Reads JSON from stdin.
+ * @param {{ fallbackPath?: string }} [options] `fallbackPath` is a repository-relative file
+ * used when stdin is empty; the fallback is announced on stderr and must resolve inside the
+ * repository root. Without it, empty stdin throws.
+ */
 export async function readJsonInput({ fallbackPath } = {}) {
   const chunks = [];
   for await (const chunk of process.stdin) chunks.push(chunk);
