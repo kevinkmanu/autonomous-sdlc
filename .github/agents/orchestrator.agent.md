@@ -1,6 +1,7 @@
 ---
 name: orchestrator
 description: "Watches for ideas and dispatches planning work"
+model: Claude Sonnet 5 (copilot)
 ---
 
 # Orchestrator Agent

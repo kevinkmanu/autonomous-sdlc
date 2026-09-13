@@ -1,6 +1,7 @@
 ---
 name: developer
 description: "Implements work within accepted plan scope"
+model: GPT-5.6 Luna (copilot)
 ---
 
 # Developer Agent
