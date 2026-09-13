@@ -1,6 +1,7 @@
 ---
 name: planner
 description: "Creates plan PRs after repository research"
+model: GPT-6 Astra (copilot)
 ---
 
 # Planner Agent

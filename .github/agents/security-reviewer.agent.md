@@ -1,6 +1,7 @@
 ---
 name: security-reviewer
 description: "Triages security findings and proposes mitigations"
+model: Claude Opus 5 (copilot)
 ---
 
 # Security Review Agent
