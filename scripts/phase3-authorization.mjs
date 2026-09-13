@@ -122,10 +122,13 @@ export function checkPlanAuthorization({ plan, authorization, implementationBran
   return errors.length === 0 ? { ok: true, planId: plan.id } : { ok: false, code: 'UNAUTHORIZED_IMPLEMENTATION', errors };
 }
 
-export async function readJsonInput() {
+export async function readJsonInput({ fallbackPath } = {}) {
   const chunks = [];
   for await (const chunk of process.stdin) chunks.push(chunk);
-  return JSON.parse(Buffer.concat(chunks).toString('utf8'));
+  const input = Buffer.concat(chunks).toString('utf8').trim();
+  if (input) return JSON.parse(input);
+  if (fallbackPath) return JSON.parse(fs.readFileSync(path.join(repositoryRoot, fallbackPath), 'utf8'));
+  throw new Error('No JSON input was provided on stdin.');
 }
 
 export function writeResult(result) {
