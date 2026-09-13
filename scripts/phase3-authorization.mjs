@@ -127,8 +127,14 @@ export async function readJsonInput({ fallbackPath } = {}) {
   for await (const chunk of process.stdin) chunks.push(chunk);
   const input = Buffer.concat(chunks).toString('utf8').trim();
   if (input) return JSON.parse(input);
-  if (fallbackPath) return JSON.parse(fs.readFileSync(path.join(repositoryRoot, fallbackPath), 'utf8'));
-  throw new Error('No JSON input was provided on stdin.');
+  if (!fallbackPath) throw new Error('No JSON input was provided on stdin.');
+
+  const resolved = path.resolve(repositoryRoot, fallbackPath);
+  if (resolved !== repositoryRoot && !resolved.startsWith(`${repositoryRoot}${path.sep}`)) {
+    throw new Error(`Fallback input must stay inside the repository: ${fallbackPath}`);
+  }
+  process.stderr.write(`No JSON input on stdin; falling back to ${fallbackPath}.\n`);
+  return JSON.parse(fs.readFileSync(resolved, 'utf8'));
 }
 
 export function writeResult(result) {
